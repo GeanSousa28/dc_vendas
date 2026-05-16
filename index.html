@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loja VIP</title>
+
+<style>
+
+body{
+    margin:0;
+    font-family:Arial,sans-serif;
+    background:url('https://i.ibb.co/VcxSk0HZ/file-000000001fac720eaabdb3954d001059.png') no-repeat center center fixed;
+    background-size:cover;
+    color:white;
+    text-align:center;
+}
+
+.container{
+    background:rgba(0,0,0,0.7);
+    min-height:100vh;
+    padding:20px;
+}
+
+h1,h2,h3{
+    color:red;
+}
+
+.menu,.submenu{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+}
+
+button{
+    padding:20px;
+    font-size:20px;
+    border:none;
+    border-radius:15px;
+    background:#0000FF;
+    color:white;
+    cursor:pointer;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+.voltar{
+    background:red;
+}
+
+/* FOTO */
+.exemploFoto{
+    width:100%;
+    height:250px;
+    border-radius:20px;
+    overflow:hidden;
+    border:2px solid white;
+    cursor:zoom-in;
+}
+
+.exemploFoto img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+/* FEEDBACK */
+#listaFeedbacks div{
+    background:#1c1c1c;
+    padding:12px;
+    border-radius:12px;
+    margin-top:10px;
+    text-align:left;
+}
+
+.total{
+    margin-top:15px;
+    font-size:24px;
+    color:#00ff88;
+    font-weight:bold;
+}
+
+.comprarTudo{
+    background:green;
+    width:100%;
+    margin-top:10px;
+}
+
+.limpar{
+    background:red;
+    width:100%;
+    margin-top:10px;
+}
+
+.removerBtn{
+    background:red;
+    border:none;
+    color:white;
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+/* FLUTUANTE */
+#carrinhoFlutuante{
+    position:fixed;
+    bottom:20px;
+    right:20px;
+    background:#00ff88;
+    color:black;
+    padding:15px 18px;
+    border-radius:50px;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 0 15px rgba(0,255,136,0.5);
+    z-index:9999;
+}
+
+/* POPUP CARRINHO */
+#carrinhoPopup{
+    position:fixed;
+    bottom:90px;
+    right:20px;
+    width:320px;
+    max-height:400px;
+    overflow-y:auto;
+    background:rgba(0,0,0,0.95);
+    border:2px solid #00ff88;
+    border-radius:20px;
+    padding:15px;
+    display:none;
+    z-index:99999;
+    box-shadow:0 0 20px rgba(0,255,136,0.5);
+}
+
+#carrinhoPopup.ativo{
+    display:block;
+}
+
+#listaCarrinho{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    margin-top:10px;
+}
+
+.itemCarrinho{
+    background:#1c1c1c;
+    padding:12px;
+    border-radius:12px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+/* ZOOM */
+#zoomOverlay{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    justify-content:center;
+    align-items:center;
+    z-index:99999;
+}
+
+#zoomOverlay img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:15px;
+    box-shadow:0 0 25px white;
+}
+
+input,textarea,select{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    font-size:16px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>『🛒』DC_VENDAS</h1>
+<h2>criado por 62 9976-4298</h2>
+
+<!-- MENU -->
+<div id="main" class="menu">
+
+<button onclick="abrir('golds')">💰 GOLDS</button>
+
+<button onclick="abrir('carros raros')">CARROS RAROS</button>
+
+<button onclick="abrir('carros premium')">CARROS PREMIUM</button>
+
+<button onclick="abrir('carros glitch')">CARRO GLITCH</button>
+
+<button onclick="abrir('exemplos')">💬 FEEDBACK</button>
+
+</div>
+
+<!-- GOLDS -->
+<div id="golds" class="submenu" style="display:none;">
+
+<button onclick="adicionar('QUALQUER QUANTIDADE DE GOLDS',6.5)">
+GOLDS = R$6,50
+</button>
+
+<button onclick="adicionar('COMBO KING + GOLDS',10)">
+COMBO KING+GOLDS = R$10
+</button>
+
+<button class="voltar" onclick="voltar()">⬅ Voltar</button>
+
+</div>
+
+<!-- RAROS -->
+<div id="carros raros" class="submenu" style="display:none;">
+
+<button onclick="adicionar('SW4 PLOT',8)">SW4 = R$8</button>
+
+<button onclick="adicionar('F650',8)">F650 = R$8</button>
+
+<button onclick="adicionar('MOTORHOME',4)">MOTORHOME = R$4</button>
+
+<button class="voltar" onclick="voltar()">⬅ Voltar</button>
+
+</div>
+
+<!-- PREMIUM -->
+<div id="carros premium" class="submenu" style="display:none;">
+
+<button onclick="adicionar('M2 NOVA',3.5)">M2 = R$3,50</button>
+
+<button onclick="adicionar('LA FERRARI',3.5)">LA FERRARI = R$3,50</button>
+
+<button onclick="adicionar('JEEP GLADIADOR',3.5)">JEEP = R$3,50</button>
+
+<button onclick="adicionar('350Z',3.5)">350Z = R$3,50</button>
+
+<button class="voltar" onclick="voltar()">⬅ Voltar</button>
+
+</div>
+
+<!-- GLITCH -->
+<div id="carros glitch" class="submenu" style="display:none;">
+
+<button onclick="adicionar('CARROS 300HP',3.5)">300HP = R$3,50</button>
+
+<button onclick="adicionar('CARROS 414HP',3.5)">414HP = R$3,50</button>
+
+<button class="voltar" onclick="voltar()">⬅ Voltar</button>
+
+</div>
+
+<!-- FEEDBACK -->
+<div id="exemplos" class="submenu" style="display:none;">
+
+<h2>⭐ Avaliações</h2>
+
+<p>
+Cada usuário possui um 🆔 único salvo automaticamente,
+impedindo feedbacks fake.
+</p>
+
+<!-- NOME FIXO -->
+<div id="areaNomeFeedback">
+
+<div id="areaNome">
+
+<h3>🆔 Salve seu nome único</h3>
+
+<input type="text"
+id="nomeInput"
+placeholder="Digite seu nome">
+
+<button onclick="salvarNome()">
+Salvar Nome
+</button>
+
+</div>
+
+<div id="nomeSalvo" style="display:none;">
+
+<div style="
+background:#111;
+padding:15px;
+border-radius:15px;
+border:2px solid #00ff88;
+text-align:left;
+">
+
+<b>👤 Nome:</b><br>
+<span id="nomeTexto"></span>
+
+<br><br>
+
+<b>🆔 ID:</b><br>
+<span id="idTexto"></span>
+
+</div>
+
+</div>
+
+</div>
+
+<br>
+
+<h3 id="mediaEstrelas">⭐ Média: 0</h3>
+
+<div class="exemploFoto" onclick="abrirZoom(this.children[0].src)">
+<img src="https://i.ibb.co/sdGD1DLv/file-00000000d874720ebb43f4a15f714b59.png">
+</div>
+
+<br>
+
+<textarea id="textoFeedback"
+placeholder="Digite sua avaliação..."></textarea>
+
+<br><br>
+
+<select id="estrelas">
+
+<option value="">Escolha as estrelas</option>
+<option value="⭐">⭐</option>
+<option value="⭐⭐">⭐⭐</option>
+<option value="⭐⭐⭐">⭐⭐⭐</option>
+<option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
+<option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+
+</select>
+
+<br><br>
+
+<button onclick="enviarFeedback()" style="background:green;">
+Enviar Feedback
+</button>
+
+<div id="listaFeedbacks"></div>
+
+<button class="voltar" onclick="voltar()">⬅ Voltar</button>
+
+</div>
+
+</div>
+
+<!-- CARRINHO -->
+<div id="carrinhoPopup">
+
+<h2>🛒 CARRINHO</h2>
+
+<div id="listaCarrinho"></div>
+
+<div class="total" id="total">Total: R$0</div>
+
+<button class="comprarTudo" onclick="comprarTudo()">
+✅ Comprar Tudo
+</button>
+
+<button class="limpar" onclick="limpar()">
+🗑 Limpar
+</button>
+
+</div>
+
+<!-- BOTÃO -->
+<div id="carrinhoFlutuante" onclick="toggleCarrinho()">
+🛒 <span id="contador">0</span>
+</div>
+
+<!-- ZOOM -->
+<div id="zoomOverlay" onclick="fecharZoom()">
+<img id="zoomImg">
+</div>
+
+<script>
+
+<!-- COLE ISSO ANTES DO SEU <script> -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+
+    
