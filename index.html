@@ -10,7 +10,7 @@
 body{
     margin:0;
     font-family:Arial,sans-serif;
-    background:url('https://i.ibb.co/VcxSk0HZ/file-000000001fac720eaabdb3954d001059.png') no-repeat center center fixed;
+   background:url('https://i.ibb.co/VcxSk0HZ/file-000000001fac720eaabdb3954d001059.png') no-repeat center center fixed;
     background-size:cover;
     color:white;
     text-align:center;
@@ -50,45 +50,29 @@ button:hover{
     background:red;
 }
 
-/* FOTO */
-.exemploFoto{
-    width:100%;
-    height:250px;
-    border-radius:20px;
-    overflow:hidden;
-    border:2px solid white;
-    cursor:zoom-in;
-}
-
-.exemploFoto img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-}
-
-/* FEEDBACK */
-#listaFeedbacks div{
-    background:#1c1c1c;
+.itemCarrinho{
+    background:#222;
     padding:12px;
-    border-radius:12px;
+    border-radius:10px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     margin-top:10px;
-    text-align:left;
 }
 
-.total{
+#totalCarrinho{
     margin-top:15px;
-    font-size:24px;
+    font-size:25px;
     color:#00ff88;
-    font-weight:bold;
 }
 
 .comprarTudo{
     background:green;
     width:100%;
-    margin-top:10px;
+    margin-top:15px;
 }
 
-.limpar{
+.limparCarrinho{
     background:red;
     width:100%;
     margin-top:10px;
@@ -98,12 +82,32 @@ button:hover{
     background:red;
     border:none;
     color:white;
-    padding:6px 12px;
+    padding:5px 10px;
     border-radius:8px;
     cursor:pointer;
 }
 
-/* FLUTUANTE */
+
+#zoomOverlay{
+    display:none;
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.9);
+    justify-content:center;
+    align-items:center;
+    z-index:9999;
+}
+
+#zoomOverlay img{
+    max-width:90%;
+    max-height:90%;
+    border-radius:15px;
+}
+
+/* 🔥 CARRINHO FLUTUANTE */
 #carrinhoFlutuante{
     position:fixed;
     bottom:20px;
@@ -116,73 +120,32 @@ button:hover{
     font-weight:bold;
     cursor:pointer;
     box-shadow:0 0 15px rgba(0,255,136,0.5);
-    z-index:9999;
+    z-index:999999;
 }
 
-/* POPUP CARRINHO */
+/* 🔥 POPUP CARRINHO */
 #carrinhoPopup{
     position:fixed;
     bottom:90px;
     right:20px;
     width:320px;
-    max-height:400px;
-    overflow-y:auto;
+    max-height:420px;
+    overflow:auto;
     background:rgba(0,0,0,0.95);
-    border:2px solid #00ff88;
+    border:2px solid #0000FF;
     border-radius:20px;
     padding:15px;
+    z-index:999999;
     display:none;
-    z-index:99999;
-    box-shadow:0 0 20px rgba(0,255,136,0.5);
+    box-shadow:0 0 20px rgba(0,255,136,0.4);
 }
 
-#carrinhoPopup.ativo{
-    display:block;
-}
-
-#listaCarrinho{
-    display:flex;
-    flex-direction:column;
-    gap:10px;
+#listaFeedbacks div{
+    background:#222;
+    padding:10px;
     margin-top:10px;
-}
-
-.itemCarrinho{
-    background:#1c1c1c;
-    padding:12px;
-    border-radius:12px;
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
-
-/* ZOOM */
-#zoomOverlay{
-    display:none;
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.9);
-    justify-content:center;
-    align-items:center;
-    z-index:99999;
-}
-
-#zoomOverlay img{
-    max-width:90%;
-    max-height:90%;
-    border-radius:15px;
-    box-shadow:0 0 25px white;
-}
-
-input,textarea,select{
-    width:100%;
-    padding:12px;
-    border:none;
-    border-radius:12px;
-    font-size:16px;
+    border-radius:10px;
+    text-align:left;
 }
 
 </style>
@@ -192,449 +155,542 @@ input,textarea,select{
 
 <div class="container">
 
-<h1>『🛒』DC_VENDAS</h1>
-<h2>criado por 62 9976-4298</h2>
+<h1>🔥 Loja Oficial GEAN 🔥</h1>
+<h2>+55 62 9976-4298</h2>
 
 <!-- MENU -->
 <div id="main" class="menu">
-
-<button onclick="abrir('golds')">💰 GOLDS</button>
-
-<button onclick="abrir('carros raros')">CARROS RAROS</button>
-
-<button onclick="abrir('carros premium')">CARROS PREMIUM</button>
-
-<button onclick="abrir('carros glitch')">CARRO GLITCH</button>
-
-<button onclick="abrir('exemplos')">💬 FEEDBACK</button>
-
+    <button onclick="abrir('golds')">💰 Golds</button>
+    <button onclick="abrir('carros raros')">🚗 CARROS RAROS</button>
+    <button onclick="abrir('carros premium')">🚗 CARROS PREMIUM</button>
+    <button onclick="abrir('carros glitch')">🚗 CARROS GLITCH</button>
+    <button onclick="abrir('feedback')">💬 feedback</button>
 </div>
 
 <!-- GOLDS -->
 <div id="golds" class="submenu" style="display:none;">
-
-<button onclick="adicionar('QUALQUER QUANTIDADE DE GOLDS',6.5)">
-GOLDS = R$6,50
-</button>
-
-<button onclick="adicionar('COMBO KING + GOLDS',10)">
-COMBO KING+GOLDS = R$10
-</button>
-
+<button onclick="adicionarCarrinho('qualquer quantidade de golds',6.50)">QUALQUER QUANTA DE GOLDS= R$6,50</button>
+<button onclick="adicionarCarrinho('qualquer quantidade de golds + king ',10,00)">QUALQUER QUANTA DE GOLDS= R$10</button>
 <button class="voltar" onclick="voltar()">⬅ Voltar</button>
-
 </div>
 
-<!-- RAROS -->
+<!-- carros raros -->
 <div id="carros raros" class="submenu" style="display:none;">
-
-<button onclick="adicionar('SW4 PLOT',8)">SW4 = R$8</button>
-
-<button onclick="adicionar('F650',8)">F650 = R$8</button>
-
-<button onclick="adicionar('MOTORHOME',4)">MOTORHOME = R$4</button>
-
+<button onclick="adicionarCarrinho('Sw4',8)">SW4= R$8,00</button>
+<button onclick="adicionarCarrinho('f-650 ',8)">F-650= R$8,00</button>
+<button onclick="adicionarCarrinho('motorhomer ',4)">motorhome= R$4,00</button>
 <button class="voltar" onclick="voltar()">⬅ Voltar</button>
-
 </div>
 
-<!-- PREMIUM -->
+<!-- carros premium -->
 <div id="carros premium" class="submenu" style="display:none;">
-
-<button onclick="adicionar('M2 NOVA',3.5)">M2 = R$3,50</button>
-
-<button onclick="adicionar('LA FERRARI',3.5)">LA FERRARI = R$3,50</button>
-
-<button onclick="adicionar('JEEP GLADIADOR',3.5)">JEEP = R$3,50</button>
-
-<button onclick="adicionar('350Z',3.5)">350Z = R$3,50</button>
-
+<button onclick="adicionarCarrinho('la Ferrari',3.5)">LA FERRARI= R$3,50</button>
+<button onclick="adicionarCarrinho('jeep gladiador ',3.5)">JEEP GLADIADOR= R$3,50</button>
+<button onclick="adicionarCarrinho('m2',3.5)">M2= R$3,50</button>
+<button onclick="adicionarCarrinho('360z ',3.5)">360z= R$3,50</button>
 <button class="voltar" onclick="voltar()">⬅ Voltar</button>
-
 </div>
 
-<!-- GLITCH -->
+<!-- carros glitch -->
 <div id="carros glitch" class="submenu" style="display:none;">
-
-<button onclick="adicionar('CARROS 300HP',3.5)">300HP = R$3,50</button>
-
-<button onclick="adicionar('CARROS 414HP',3.5)">414HP = R$3,50</button>
-
+<button onclick="adicionarCarrinho('300hp',3.5)">300HP= R$3,50</button>
+<button onclick="adicionarCarrinho('414hp ',3.5)">414HP= R$3,50</button>
 <button class="voltar" onclick="voltar()">⬅ Voltar</button>
-
 </div>
+
 
 <!-- FEEDBACK -->
-<div id="exemplos" class="submenu" style="display:none;">
+<div id="feedback" class="submenu" style="display:none;">
 
-<h2>⭐ Avaliações</h2>
+<h2>⭐ Avaliações dos clientes</h2>
 
-<p>
-Cada usuário possui um 🆔 único salvo automaticamente,
-impedindo feedbacks fake.
-</p>
-
-<!-- NOME FIXO -->
-<div id="areaNomeFeedback">
-
-<div id="areaNome">
-
-<h3>🆔 Salve seu nome único</h3>
-
-<input type="text"
-id="nomeInput"
-placeholder="Digite seu nome">
-
-<button onclick="salvarNome()">
-Salvar Nome
-</button>
-
-</div>
-
-<div id="nomeSalvo" style="display:none;">
-
-<div style="
-background:#111;
-padding:15px;
-border-radius:15px;
-border:2px solid #00ff88;
-text-align:left;
-">
-
-<b>👤 Nome:</b><br>
-<span id="nomeTexto"></span>
-
-<br><br>
-
-<b>🆔 ID:</b><br>
-<span id="idTexto"></span>
-
-</div>
-
-</div>
-
+<div style="background:#111;padding:12px;border-radius:15px;">
+🛡 Cada cliente possui um sistema de 🆔 único automático.<br>
+Isso impede feedback fake mesmo mudando o nome.
 </div>
 
 <br>
 
-<h3 id="mediaEstrelas">⭐ Média: 0</h3>
-
-<div class="exemploFoto" onclick="abrirZoom(this.children[0].src)">
-<img src="https://i.ibb.co/sdGD1DLv/file-00000000d874720ebb43f4a15f714b59.png">
+<div id="mediaEstrelas"
+style="font-size:25px;color:gold;font-weight:bol;">
+⭐⭐⭐⭐⭐ (5.0)
 </div>
 
 <br>
 
-<textarea id="textoFeedback"
-placeholder="Digite sua avaliação..."></textarea>
+<!-- FOTO -->
+<div class="exemploFoto" onclick="abrirZoom('https://i.ibb.co/sdGD1DLv/file-00000000d874720ebb43f4a15f714b59.png')">
+    <img src="https://i.ibb.co/sdGD1DLv/file-00000000d874720ebb43f4a15f714b59.png">
+</div>
 
-<br><br>
+<br>
 
-<select id="estrelas">
+<!-- 👤 NOME FIXO -->
+<div id="areaNome"></div>
 
-<option value="">Escolha as estrelas</option>
-<option value="⭐">⭐</option>
-<option value="⭐⭐">⭐⭐</option>
-<option value="⭐⭐⭐">⭐⭐⭐</option>
-<option value="⭐⭐⭐⭐">⭐⭐⭐⭐</option>
-<option value="⭐⭐⭐⭐⭐">⭐⭐⭐⭐⭐</option>
+<br>
 
+<select id="notaFeedback"
+style="width:100%;padding:15px;border-radius:15px;font-size:18px;">
+<option value="">⭐ Escolha as estrelas</option>
+<option value="1">⭐</option>
+<option value="2">⭐⭐</option>
+<option value="3">⭐⭐⭐</option>
+<option value="4">⭐⭐⭐⭐</option>
+<option value="5">⭐⭐⭐⭐⭐</option>
 </select>
 
 <br><br>
 
-<button onclick="enviarFeedback()" style="background:green;">
-Enviar Feedback
-</button>
+<textarea id="textoFeedback"
+placeholder="Só clientes que compraram podem avaliar..."
+style="width:100%;height:120px;border-radius:15px;padding:10px;"></textarea>
 
-<div id="listaFeedbacks"></div>
+<br><br>
+
+<button onclick="enviarFeedback()" style="background:green;width:100%;">
+Enviar feedback
+</button>
 
 <button class="voltar" onclick="voltar()">⬅ Voltar</button>
 
+<div id="listaFeedbacks"></div>
 </div>
 
 </div>
 
-<!-- CARRINHO -->
+<!-- 🔥 CARRINHO FLUTUANTE -->
+<div id="carrinhoFlutuante" onclick="toggleCarrinho()">
+🛒 <span id="contador">0</span>
+</div>
+
+<!-- 🔥 POPUP DO CARRINHO -->
 <div id="carrinhoPopup">
 
-<h2>🛒 CARRINHO</h2>
+<h2>🛒 Seu Carrinho</h2>
 
 <div id="listaCarrinho"></div>
 
-<div class="total" id="total">Total: R$0</div>
+<div id="totalCarrinho">Total: R$0</div>
 
 <button class="comprarTudo" onclick="comprarTudo()">
 ✅ Comprar Tudo
 </button>
 
-<button class="limpar" onclick="limpar()">
-🗑 Limpar
+<button class="limparCarrinho" onclick="limparCarrinho()">
+🗑 Limpar Carrinho
 </button>
 
 </div>
 
-<!-- BOTÃO -->
-<div id="carrinhoFlutuante" onclick="toggleCarrinho()">
-🛒 <span id="contador">0</span>
-</div>
-
 <!-- ZOOM -->
 <div id="zoomOverlay" onclick="fecharZoom()">
-<img id="zoomImg">
+    <img id="zoomImg">
 </div>
 
-<script>
-
-<!-- COLE ISSO ANTES DO SEU <script> -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
 
-    <!-- FIREBASE (v8 - correto para seu código atual) -->
+<!-- FIREBASE -->
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+
 <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
 <script>
-/* =========================
-   FIREBASE CONFIG
-========================= */
+
 const firebaseConfig = {
-  apiKey: "AIzaSyBaFGdMHOy59fJshA-Hdr6V9e92rLa2dzU",
-  authDomain: "lojinhagean.firebaseapp.com",
-  databaseURL: "https://lojinhagean-default-rtdb.firebaseio.com",
-  projectId: "lojinhagean",
-  storageBucket: "lojinhagean.firebasestorage.app",
-  messagingSenderId: "572363932158",
-  appId: "1:572363932158:web:f9babe712b0d848a09c0af",
-  measurementId: "G-QR2K8NSVNG"
+  apiKey: "AIzaSyDiUxNnUpNOLfr42s9vhQLApuntCI5k41Q",
+  authDomain: "dcvendas.firebaseapp.com",
+  projectId: "dcvendas",
+  storageBucket: "dcvendas.firebasestorage.app",
+  messagingSenderId: "703988302793",
+  appId: "1:703988302793:web:11b4530ca2db8d621ade18",
+  measurementId: "G-NQV3GSPZG5"
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.database();
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
 
 /* =========================
-   SEU SCRIPT ORIGINAL
+   SCRIPT
 ========================= */
 
 let carrinho = [];
-let feedbacks = [];
 
+/* ID ÚNICO */
 let userID = localStorage.getItem("userID");
 
-if (!userID) {
-  userID = crypto.randomUUID();
-  localStorage.setItem("userID", userID);
+if(!userID){
+
+    userID = crypto.randomUUID();
+
+    localStorage.setItem("userID",userID);
+
 }
 
-let nomeUsuario = localStorage.getItem("nomeUsuario");
+/* NOME FIXO */
+let nomeUsuario = localStorage.getItem("nomeUsuario") || "";
+
+/* MOSTRAR NOME FIXO */
+window.onload = function(){
+
+    let areaNome = document.getElementById("areaNome");
+
+    if(nomeUsuario){
+
+        areaNome.innerHTML = `
+
+        <div style="
+        background:#111;
+        padding:15px;
+        border-radius:15px;
+        border:2px solid #00ff88;
+        text-align:left;
+        ">
+
+        <b>👤 Nome:</b><br>
+        ${nomeUsuario}
+
+        <br><br>
+
+        <b>🆔 ID:</b><br>
+        ${userID.slice(0,6)}
+
+        </div>
+
+        `;
+
+    }else{
+
+        areaNome.innerHTML = `
+
+        <div style="
+        background:#111;
+        padding:15px;
+        border-radius:15px;
+        border:2px solid #00ff88;
+        ">
+
+        <h3>🆔 Salve seu nome único</h3>
+
+        <input type="text"
+        id="nomeInput"
+        placeholder="Digite seu nome"
+        style="
+        width:100%;
+        padding:12px;
+        border:none;
+        border-radius:12px;
+        ">
+
+        <br><br>
+
+        <button onclick="salvarNome()"
+        style="
+        width:100%;
+        background:#00aa88;
+        ">
+        Salvar Nome
+        </button>
+
+        </div>
+
+        `;
+    }
+
+    mostrarFeedbacks();
+}
 
 /* MENU */
-function abrir(menu) {
-  document.getElementById("main").style.display = "none";
-  document.getElementById(menu).style.display = "flex";
+function abrir(menu){
 
-  if (menu === "exemplos") {
-    mostrarFeedbacks();
-  }
+    document.getElementById("main").style.display="none";
+
+    document.getElementById(menu).style.display="flex";
 }
 
-function voltar() {
-  document.querySelectorAll(".submenu").forEach(m => {
-    m.style.display = "none";
-  });
+function voltar(){
 
-  document.getElementById("main").style.display = "flex";
+    document.querySelectorAll(".submenu")
+    .forEach(m=>{
+        m.style.display="none";
+    });
+
+    document.getElementById("main").style.display="flex";
 }
 
-/* NOME */
-if (nomeUsuario) {
-  document.getElementById("areaNome").style.display = "none";
-  document.getElementById("nomeSalvo").style.display = "block";
-  document.getElementById("nomeTexto").innerText = nomeUsuario;
-  document.getElementById("idTexto").innerText = userID.slice(0, 6);
-}
+/* SALVAR NOME */
+function salvarNome(){
 
-function salvarNome() {
-  let nome = document.getElementById("nomeInput").value;
+    let nome =
+    document.getElementById("nomeInput").value;
 
-  if (nome.trim() === "") {
-    alert("Digite um nome");
-    return;
-  }
+    if(nome.trim()==""){
+        alert("Digite um nome");
+        return;
+    }
 
-  localStorage.setItem("nomeUsuario", nome);
-  nomeUsuario = nome;
+    localStorage.setItem("nomeUsuario",nome);
 
-  document.getElementById("areaNome").style.display = "none";
-  document.getElementById("nomeSalvo").style.display = "block";
-  document.getElementById("nomeTexto").innerText = nomeUsuario;
-  document.getElementById("idTexto").innerText = userID.slice(0, 6);
+    nomeUsuario = nome;
 
-  alert("Nome salvo");
+    location.reload();
 }
 
 /* CARRINHO */
-function adicionar(nome, valor) {
-  carrinho.push({ nome, valor });
-  atualizar();
+function adicionarCarrinho(nome,valor){
+
+    carrinho.push({nome,valor});
+
+    atualizarCarrinho();
 }
 
-function atualizar() {
-  let lista = document.getElementById("listaCarrinho");
-  let total = document.getElementById("total");
+function atualizarCarrinho(){
 
-  lista.innerHTML = "";
+    let lista =
+    document.getElementById("listaCarrinho");
 
-  let soma = 0;
+    let total =
+    document.getElementById("totalCarrinho");
 
-  carrinho.forEach((item, index) => {
-    soma += item.valor;
+    lista.innerHTML="";
 
-    lista.innerHTML += `
-      <div class="itemCarrinho">
-        <span>${item.nome} - R$${item.valor}</span>
-        <button class="removerBtn" onclick="remover(${index})">❌</button>
-      </div>
-    `;
-  });
+    let soma=0;
 
-  total.innerHTML = "Total: R$" + soma;
-  document.getElementById("contador").innerText = carrinho.length;
+    carrinho.forEach((item,index)=>{
+
+        soma += item.valor;
+
+        lista.innerHTML += `
+
+        <div class="itemCarrinho">
+
+        <span>
+        ${item.nome} - R$${item.valor}
+        </span>
+
+        <button class="removerBtn"
+        onclick="removerItem(${index})">
+        ❌
+        </button>
+
+        </div>
+
+        `;
+    });
+
+    total.innerHTML =
+    "Total: R$"+soma;
+
+    document.getElementById("contador")
+    .innerText = carrinho.length;
 }
 
-function remover(index) {
-  carrinho.splice(index, 1);
-  atualizar();
+function removerItem(index){
+
+    carrinho.splice(index,1);
+
+    atualizarCarrinho();
 }
 
-function limpar() {
-  carrinho = [];
-  atualizar();
+function limparCarrinho(){
+
+    carrinho=[];
+
+    atualizarCarrinho();
+}
+
+/* CARRINHO FLUTUANTE */
+function toggleCarrinho(){
+
+    let popup =
+    document.getElementById("carrinhoPopup");
+
+    if(popup.style.display=="block"){
+
+        popup.style.display="none";
+
+    }else{
+
+        popup.style.display="block";
+    }
 }
 
 /* COMPRAR */
-function comprarTudo() {
-  if (carrinho.length == 0) {
-    alert("Carrinho vazio");
-    return;
-  }
+function comprarTudo(){
 
-  let numero = "556299764298";
-  let msg = "Olá, quero comprar:%0A%0A";
-  let soma = 0;
+    if(carrinho.length==0){
 
-  carrinho.forEach(i => {
-    msg += "- " + i.nome + " R$" + i.valor + "%0A";
-    soma += i.valor;
-  });
+        alert("Carrinho vazio");
 
-  msg += "%0ATotal: R$" + soma;
-
-  window.open("https://wa.me/" + numero + "?text=" + msg);
-
-  localStorage.setItem("podeAvaliar", "true");
-}
-
-/* FEEDBACK */
-function enviarFeedback() {
-  let podeAvaliar = localStorage.getItem("podeAvaliar");
-
-  if (!podeAvaliar) {
-    alert("Compre algo primeiro");
-    return;
-  }
-
-  if (!nomeUsuario) {
-    alert("Salve seu nome primeiro");
-    return;
-  }
-
-  let texto = document.getElementById("textoFeedback").value;
-  let estrelas = document.getElementById("estrelas").value;
-
-  if (texto.trim() === "") {
-    alert("Digite algo");
-    return;
-  }
-
-  if (estrelas === "") {
-    alert("Escolha as estrelas");
-    return;
-  }
-
-  db.ref("feedbacks").push({
-    nome: nomeUsuario,
-    id: userID,
-    texto: texto,
-    estrelas: estrelas,
-    data: new Date().toLocaleString()
-  });
-
-  localStorage.removeItem("podeAvaliar");
-  document.getElementById("textoFeedback").value = "";
-
-  mostrarFeedbacks();
-  alert("Feedback enviado");
-}
-
-/* MOSTRAR FEEDBACKS */
-function mostrarFeedbacks() {
-  let area = document.getElementById("listaFeedbacks");
-
-  db.ref("feedbacks").on("value", snapshot => {
-    area.innerHTML = "";
-
-    let soma = 0;
-    let total = 0;
-
-    let dados = snapshot.val();
-
-    if (!dados) {
-      area.innerHTML = "<div>Nenhuma avaliação ainda.</div>";
-      return;
+        return;
     }
 
-    let lista = Object.values(dados).reverse();
+    let numero="556299764298";
 
-    lista.forEach(f => {
-      soma += f.estrelas.length;
-      total++;
+    let msg =
+    "Olá quero comprar:%0A%0A";
 
-      area.innerHTML += `
-        <div>
-          <b>👤 ${f.nome}</b><br>
-          🆔 ${f.id.slice(0, 6)}<br><br>
-          ${f.estrelas}<br><br>
-          ${f.texto}<br><br>
-          <small>${f.data}</small>
-        </div>
-      `;
+    let soma=0;
+
+    carrinho.forEach(i=>{
+
+        msg +=
+        "- "+i.nome+
+        " R$"+i.valor+
+        "%0A";
+
+        soma += i.valor;
     });
 
-    let media = total > 0 ? (soma / total).toFixed(1) : 0;
+    msg += "%0ATotal: R$"+soma;
 
-    document.getElementById("mediaEstrelas").innerHTML =
-      "⭐ Média: " + media + "/5";
-  });
+    window.open(
+    "https://wa.me/"+numero+"?text="+msg
+    );
+
+    localStorage.setItem(
+    "podeAvaliar",
+    "true"
+    );
 }
 
-/* CARRINHO POPUP */
-function toggleCarrinho() {
-  let popup = document.getElementById("carrinhoPopup");
-  popup.classList.toggle("ativo");
+/* ENVIAR FEEDBACK */
+function enviarFeedback(){
+
+    let podeAvaliar =
+    localStorage.getItem("podeAvaliar");
+
+    if(!nomeUsuario){
+
+        alert("Salve seu nome primeiro");
+
+        return;
+    }
+
+    if(!podeAvaliar){
+
+        alert("Compre algo primeiro");
+
+        return;
+    }
+
+    let texto =
+    document.getElementById("textoFeedback").value;
+
+    let estrelas =
+    document.getElementById("notaFeedback").value;
+
+    if(estrelas==""){
+
+        alert("Escolha as estrelas");
+
+        return;
+    }
+
+    if(texto.trim()==""){
+
+        alert("Digite algo");
+
+        return;
+    }
+
+    db.ref("feedbacks").push({
+
+        nome:nomeUsuario,
+        id:userID,
+        texto:texto,
+        estrelas:parseInt(estrelas),
+        data:new Date().toLocaleString()
+
+    });
+
+    localStorage.removeItem("podeAvaliar");
+
+    document.getElementById("textoFeedback").value="";
+
+    document.getElementById("notaFeedback").value="";
+
+    alert("✔ Feedback enviado");
 }
 
-/* ZOOM */
-function abrirZoom(src) {
-  document.getElementById("zoomImg").src = src;
-  document.getElementById("zoomOverlay").style.display = "flex";
+/* MOSTRAR FEEDBACKS ONLINE */
+function mostrarFeedbacks(){
+
+    let area =
+    document.getElementById("listaFeedbacks");
+
+    db.ref("feedbacks").on("value",(snapshot)=>{
+
+        area.innerHTML="";
+
+        let dados = snapshot.val();
+
+        if(!dados){
+
+            document.getElementById("mediaEstrelas")
+            .innerHTML =
+            "⭐⭐⭐⭐⭐ (5.0)";
+
+            return;
+        }
+
+        let lista =
+        Object.values(dados).reverse();
+
+        let soma=0;
+
+        lista.forEach(f=>{
+
+            soma += f.estrelas;
+
+            let estrelas =
+            "⭐".repeat(f.estrelas);
+
+            area.innerHTML += `
+
+            <div>
+
+            <b>${f.nome}</b>
+
+            <br>
+
+            🆔 ${f.id.slice(0,6)}
+
+            <br><br>
+
+            <span style="
+            color:gold;
+            font-size:20px;
+            ">
+            ${estrelas}
+            </span>
+
+            <br><br>
+
+            ${f.texto}
+
+            <br><br>
+
+            <small>${f.data}</small>
+
+            </div>
+
+            `;
+        });
+
+        let media =
+        (soma/lista.length).toFixed(1);
+
+        document.getElementById("mediaEstrelas")
+        .innerHTML =
+        "⭐ Média: "+media+"/5";
+
+    });
 }
 
-function fecharZoom() {
-  document.getElementById("zoomOverlay").style.display = "none";
-}
-
-mostrarFeedbacks();
 </script>
