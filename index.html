@@ -155,7 +155,7 @@ button:hover{
 
 <div class="container">
 
-<h1>🔥 Loja Oficial GEAN 🔥</h1>
+<h1>『🛒』DC_VENDAS</h1></h1>
 <h2>+55 62 9976-4298</h2>
 
 <!-- MENU -->
@@ -311,9 +311,8 @@ const firebaseConfig = {
   measurementId: "G-NQV3GSPZG5"
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
 
 /* =========================
    SCRIPT
