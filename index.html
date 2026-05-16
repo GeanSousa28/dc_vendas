@@ -392,4 +392,249 @@ Enviar Feedback
 
 <script>
 
-    
+    <!-- FIREBASE (v8 - correto para seu código atual) -->
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+<script>
+/* =========================
+   FIREBASE CONFIG
+========================= */
+const firebaseConfig = {
+  apiKey: "AIzaSyBaFGdMHOy59fJshA-Hdr6V9e92rLa2dzU",
+  authDomain: "lojinhagean.firebaseapp.com",
+  databaseURL: "https://lojinhagean-default-rtdb.firebaseio.com",
+  projectId: "lojinhagean",
+  storageBucket: "lojinhagean.firebasestorage.app",
+  messagingSenderId: "572363932158",
+  appId: "1:572363932158:web:f9babe712b0d848a09c0af",
+  measurementId: "G-QR2K8NSVNG"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.database();
+
+/* =========================
+   SEU SCRIPT ORIGINAL
+========================= */
+
+let carrinho = [];
+let feedbacks = [];
+
+let userID = localStorage.getItem("userID");
+
+if (!userID) {
+  userID = crypto.randomUUID();
+  localStorage.setItem("userID", userID);
+}
+
+let nomeUsuario = localStorage.getItem("nomeUsuario");
+
+/* MENU */
+function abrir(menu) {
+  document.getElementById("main").style.display = "none";
+  document.getElementById(menu).style.display = "flex";
+
+  if (menu === "exemplos") {
+    mostrarFeedbacks();
+  }
+}
+
+function voltar() {
+  document.querySelectorAll(".submenu").forEach(m => {
+    m.style.display = "none";
+  });
+
+  document.getElementById("main").style.display = "flex";
+}
+
+/* NOME */
+if (nomeUsuario) {
+  document.getElementById("areaNome").style.display = "none";
+  document.getElementById("nomeSalvo").style.display = "block";
+  document.getElementById("nomeTexto").innerText = nomeUsuario;
+  document.getElementById("idTexto").innerText = userID.slice(0, 6);
+}
+
+function salvarNome() {
+  let nome = document.getElementById("nomeInput").value;
+
+  if (nome.trim() === "") {
+    alert("Digite um nome");
+    return;
+  }
+
+  localStorage.setItem("nomeUsuario", nome);
+  nomeUsuario = nome;
+
+  document.getElementById("areaNome").style.display = "none";
+  document.getElementById("nomeSalvo").style.display = "block";
+  document.getElementById("nomeTexto").innerText = nomeUsuario;
+  document.getElementById("idTexto").innerText = userID.slice(0, 6);
+
+  alert("Nome salvo");
+}
+
+/* CARRINHO */
+function adicionar(nome, valor) {
+  carrinho.push({ nome, valor });
+  atualizar();
+}
+
+function atualizar() {
+  let lista = document.getElementById("listaCarrinho");
+  let total = document.getElementById("total");
+
+  lista.innerHTML = "";
+
+  let soma = 0;
+
+  carrinho.forEach((item, index) => {
+    soma += item.valor;
+
+    lista.innerHTML += `
+      <div class="itemCarrinho">
+        <span>${item.nome} - R$${item.valor}</span>
+        <button class="removerBtn" onclick="remover(${index})">❌</button>
+      </div>
+    `;
+  });
+
+  total.innerHTML = "Total: R$" + soma;
+  document.getElementById("contador").innerText = carrinho.length;
+}
+
+function remover(index) {
+  carrinho.splice(index, 1);
+  atualizar();
+}
+
+function limpar() {
+  carrinho = [];
+  atualizar();
+}
+
+/* COMPRAR */
+function comprarTudo() {
+  if (carrinho.length == 0) {
+    alert("Carrinho vazio");
+    return;
+  }
+
+  let numero = "556299764298";
+  let msg = "Olá, quero comprar:%0A%0A";
+  let soma = 0;
+
+  carrinho.forEach(i => {
+    msg += "- " + i.nome + " R$" + i.valor + "%0A";
+    soma += i.valor;
+  });
+
+  msg += "%0ATotal: R$" + soma;
+
+  window.open("https://wa.me/" + numero + "?text=" + msg);
+
+  localStorage.setItem("podeAvaliar", "true");
+}
+
+/* FEEDBACK */
+function enviarFeedback() {
+  let podeAvaliar = localStorage.getItem("podeAvaliar");
+
+  if (!podeAvaliar) {
+    alert("Compre algo primeiro");
+    return;
+  }
+
+  if (!nomeUsuario) {
+    alert("Salve seu nome primeiro");
+    return;
+  }
+
+  let texto = document.getElementById("textoFeedback").value;
+  let estrelas = document.getElementById("estrelas").value;
+
+  if (texto.trim() === "") {
+    alert("Digite algo");
+    return;
+  }
+
+  if (estrelas === "") {
+    alert("Escolha as estrelas");
+    return;
+  }
+
+  db.ref("feedbacks").push({
+    nome: nomeUsuario,
+    id: userID,
+    texto: texto,
+    estrelas: estrelas,
+    data: new Date().toLocaleString()
+  });
+
+  localStorage.removeItem("podeAvaliar");
+  document.getElementById("textoFeedback").value = "";
+
+  mostrarFeedbacks();
+  alert("Feedback enviado");
+}
+
+/* MOSTRAR FEEDBACKS */
+function mostrarFeedbacks() {
+  let area = document.getElementById("listaFeedbacks");
+
+  db.ref("feedbacks").on("value", snapshot => {
+    area.innerHTML = "";
+
+    let soma = 0;
+    let total = 0;
+
+    let dados = snapshot.val();
+
+    if (!dados) {
+      area.innerHTML = "<div>Nenhuma avaliação ainda.</div>";
+      return;
+    }
+
+    let lista = Object.values(dados).reverse();
+
+    lista.forEach(f => {
+      soma += f.estrelas.length;
+      total++;
+
+      area.innerHTML += `
+        <div>
+          <b>👤 ${f.nome}</b><br>
+          🆔 ${f.id.slice(0, 6)}<br><br>
+          ${f.estrelas}<br><br>
+          ${f.texto}<br><br>
+          <small>${f.data}</small>
+        </div>
+      `;
+    });
+
+    let media = total > 0 ? (soma / total).toFixed(1) : 0;
+
+    document.getElementById("mediaEstrelas").innerHTML =
+      "⭐ Média: " + media + "/5";
+  });
+}
+
+/* CARRINHO POPUP */
+function toggleCarrinho() {
+  let popup = document.getElementById("carrinhoPopup");
+  popup.classList.toggle("ativo");
+}
+
+/* ZOOM */
+function abrirZoom(src) {
+  document.getElementById("zoomImg").src = src;
+  document.getElementById("zoomOverlay").style.display = "flex";
+}
+
+function fecharZoom() {
+  document.getElementById("zoomOverlay").style.display = "none";
+}
+
+mostrarFeedbacks();
+</script>
